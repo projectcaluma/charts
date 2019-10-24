@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "caluma.fullname" . }}-backend
+  labels:
+{{ include "caluma.labels" . | indent 4 }}
+    app.kubernetes.io/component: backend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "caluma.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: backend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "caluma.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: backend
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.backend.repository }}:version-{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: DATABASE_HOST
+            value: "{{ template "caluma.fullname" . }}-postgresql"
+          - name: DATABASE_PORT
+            value: "5432"
+          - name: DATABASE_USER
+            value: "{{ .Values.postgresql.postgresqlUsername }}"
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ template "caluma.fullname" . }}-postgresql"
+                key: postgresql-password
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: "{{ template "caluma.fullname" . }}-backend"
+                key: secretkey
+          - name: ALLOWED_HOSTS
+            value: "*"
+          - name: VISIBILITY_CLASSES
+            value: "caluma.core.visibilities.Any"
+          - name: PERMISSION_CLASSES
+            value: "caluma.core.permissions.AllowAny"
+{{- if .Values.minio.enabled }}
+{{- /*
+TODO: add environment variables for MinIO integration
+*/ -}}
+{{- end }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
