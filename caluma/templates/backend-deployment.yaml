@@ -67,12 +67,12 @@ spec:
               containerPort: 8000
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
+            # TODO: define better livenessProbe
+            tcpSocket:
               port: http
           readinessProbe:
-            httpGet:
-              path: /
+            # TODO: define better readinessProbe
+            tcpSocket:
               port: http
           resources:
 {{ toYaml .Values.resources | indent 12 }}
