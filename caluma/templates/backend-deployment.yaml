@@ -61,6 +61,10 @@ spec:
                 key: secretkey
           - name: MINIO_STORAGE_USE_HTTPS
             value: "{{ if ne (len .Values.minio.ingress.tls) 0 }}true{{ else }}false{{ end }}"
+          - name: MINIO_STORAGE_MEDIA_BUCKET_NAME
+            value: "{{ .Values.minio.defaultBucket.name }}"
+          - name: MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET
+            value: "false"
 {{- end }}
           ports:
             - name: http

@@ -76,6 +76,11 @@ minio:
   enabled: false
   accessKey: ""
   secretKey: ""
+  defaultBucket:
+    enabled: true
+    name: caluma-media
+    # TODO: review MinIO policies
+    #policy: none
   ingress:
     enabled: true
     annotations: {}
