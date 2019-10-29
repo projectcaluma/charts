@@ -115,6 +115,11 @@ minio:
   ingress:
     enabled: true
     annotations: {}
+      ## You might need to increase the client_max_body_size in nginx-ingress
+      ## you can do this using the following annotation.
+      ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md#custom-max-body-size
+      #nginx.ingress.kubernetes.io/proxy-body-size: 16m
+      #kubernetes.io/ingress.class: "nginx"
     hosts:
       - caluma.chart-example.local
     tls: []
