@@ -60,9 +60,40 @@ affinity: {}
 
 postgresql:
   enabled: true
+
   postgresqlDatabase: caluma
   postgresqlUsername: caluma
   postgresqlPassword: CHANGEME
+
+  ## This is one of those hacks where you're both proud and shocked about the
+  ## thing you created at the same time.
+  ##
+  ## First this is required because the Bitnami PostgreSQL image is not running
+  ## the initdb scripts passed as .sql with SUPERUSER privileges in PostgreSQL.
+  ## ref: https://github.com/bitnami/bitnami-docker-postgresql/issues/155
+  ##
+  ## Next we thought that we could just override the pg_hba.conf via
+  ## files/pg_hba.conf and switch socket connections to trust, but that didn't
+  ## work either because somehow the .Files variable doesn't work in included
+  ## subcharts.
+  ## ref: https://github.com/helm/helm/issues/4994
+  ##
+  ## So now we're stuck with this piece of shell code to activate the hstore
+  ## extension required by Caluma.
+  initdbScripts:
+    create_extension_hstore.sh: |
+      #!/bin/sh
+      #
+      # This script is being used to temporarily switch socket connections to trusted
+      # to enable the hstore extension in the database above.
+
+      set -xeuf -o pipefail
+
+      sed -E -i 's/local +all +all +md5/local all all trust/' /opt/bitnami/postgresql/conf/pg_hba.conf
+      pg_ctl reload
+      psql --username=postgres --dbname="${POSTGRES_DB}" --command 'CREATE EXTENSION IF NOT EXISTS hstore;' --echo-errors
+      sed -E -i 's/local +all +all +trust/local all all md5/' /opt/bitnami/postgresql/conf/pg_hba.conf
+      pg_ctl reload
 
 ##
 ## MinIO chart configuration
@@ -84,7 +115,6 @@ minio:
   ingress:
     enabled: true
     annotations: {}
-    path: /minio
     hosts:
       - caluma.chart-example.local
     tls: []
