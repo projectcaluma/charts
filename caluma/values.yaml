@@ -11,10 +11,22 @@ image:
     # to support tag too.
     #tag: version-2.0.0
     pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # imagePullSecrets:
+    #   - myRegistryKeySecretName
   frontend:
     repository: projectcaluma/caluma-demo
     tag: stable
     pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # imagePullSecrets:
+    #   - myRegistryKeySecretName
 
 nameOverride: ""
 fullnameOverride: ""
