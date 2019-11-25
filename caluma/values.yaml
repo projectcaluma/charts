@@ -7,8 +7,8 @@ replicaCount: 1
 image:
   backend:
     repository: projectcaluma/caluma
-    # TODO: discuss if we want to solely pull based on AppVersion or if we want
-    # to support tag too.
+    # If no value for tag is specified the image tag
+    # version-{{ .Chart.AppVersion }} is being used.
     #tag: version-2.0.0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.

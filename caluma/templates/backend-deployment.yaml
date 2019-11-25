@@ -5,6 +5,8 @@ metadata:
   labels:
 {{ include "caluma.labels" . | indent 4 }}
     app.kubernetes.io/component: backend
+  annotations:
+    checksum/backend-secret: {{ include (print $.Template.BasePath "/backend-secret.yaml") . | sha256sum }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -21,7 +23,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.backend.repository }}:version-{{ .Chart.AppVersion }}"
+          image: "{{ .Values.image.backend.repository }}:{{ if .Values.image.backend.tag }}{{ .Values.image.backend.tag }}{{ else }}version-{{ .Chart.AppVersion }}{{ end }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: DATABASE_HOST
