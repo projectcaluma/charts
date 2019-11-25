@@ -41,7 +41,7 @@ spec:
                 name: "{{ template "caluma.fullname" . }}-backend"
                 key: secretkey
           - name: ALLOWED_HOSTS
-            value: "*"
+            value: "{{ .Values.allowedHosts }}"
           - name: VISIBILITY_CLASSES
             value: "caluma.core.visibilities.Any"
           - name: PERMISSION_CLASSES
