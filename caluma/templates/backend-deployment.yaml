@@ -24,7 +24,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.backend.repository }}:{{ if .Values.image.backend.tag }}{{ .Values.image.backend.tag }}{{ else }}version-{{ .Chart.AppVersion }}{{ end }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
           env:
           - name: DATABASE_HOST
             value: "{{ template "caluma.fullname" . }}-postgresql"
