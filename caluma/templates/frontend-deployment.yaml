@@ -24,7 +24,7 @@ spec:
           image: "{{ .Values.image.frontend.repository }}:{{ .Values.image.frontend.tag }}"
           imagePullPolicy: {{ .Values.image.frontend.pullPolicy }}
           env:
-{{ toYaml .Values.frontend.environment | indent 12 }}
+{{ toYaml .Values.frontend.additionalEnvironment | indent 12 }}
           ports:
             - name: http
               containerPort: 80

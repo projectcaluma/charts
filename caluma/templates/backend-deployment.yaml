@@ -26,47 +26,50 @@ spec:
           image: "{{ .Values.image.backend.repository }}:{{ if .Values.image.backend.tag }}{{ .Values.image.backend.tag }}{{ else }}version-{{ .Chart.AppVersion }}{{ end }}"
           imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
           env:
-          - name: DATABASE_HOST
-            value: "{{ template "caluma.fullname" . }}-postgresql"
-          - name: DATABASE_PORT
-            value: "5432"
-          - name: DATABASE_USER
-            value: "{{ .Values.postgresql.postgresqlUsername }}"
-          - name: DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: "{{ template "caluma.fullname" . }}-postgresql"
-                key: postgresql-password
-          - name: SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: "{{ template "caluma.fullname" . }}-backend"
-                key: secretkey
-          - name: ALLOWED_HOSTS
-            value: "{{ .Values.allowedHosts }}"
-          - name: VISIBILITY_CLASSES
-            value: "caluma.core.visibilities.Any"
-          - name: PERMISSION_CLASSES
-            value: "caluma.core.permissions.AllowAny"
+            - name: DATABASE_HOST
+              value: "{{ template "caluma.fullname" . }}-postgresql"
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_USER
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "caluma.fullname" . }}-postgresql"
+                  key: postgresql-password
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "caluma.fullname" . }}-backend"
+                  key: secretkey
+            - name: ALLOWED_HOSTS
+              value: "{{ .Values.allowedHosts }}"
+            - name: VISIBILITY_CLASSES
+              value: "caluma.core.visibilities.Any"
+            - name: PERMISSION_CLASSES
+              value: "caluma.core.permissions.AllowAny"
+{{- if .Values.backend.additionalEnvironment }}
+{{ toYaml .Values.backend.additionalEnvironment | indent 12 }}
+{{- end }}
 {{- if .Values.minio.enabled }}
-          - name: MINIO_STORAGE_ENDPOINT
-            value: "{{ index .Values.minio.ingress.hosts 0 }}"
-          - name: MINIO_STORAGE_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: "{{ template "caluma.fullname" . }}-minio"
-                key: accesskey
-          - name: MINIO_STORAGE_SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: "{{ template "caluma.fullname" . }}-minio"
-                key: secretkey
-          - name: MINIO_STORAGE_USE_HTTPS
-            value: "{{ if $.Values.minio.ingress.tls }}true{{ else }}false{{ end }}"
-          - name: MINIO_STORAGE_MEDIA_BUCKET_NAME
-            value: "{{ .Values.minio.defaultBucket.name }}"
-          - name: MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET
-            value: "false"
+            - name: MINIO_STORAGE_ENDPOINT
+              value: "{{ index .Values.minio.ingress.hosts 0 }}"
+            - name: MINIO_STORAGE_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "caluma.fullname" . }}-minio"
+                  key: accesskey
+            - name: MINIO_STORAGE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "caluma.fullname" . }}-minio"
+                  key: secretkey
+            - name: MINIO_STORAGE_USE_HTTPS
+              value: "{{ if $.Values.minio.ingress.tls }}true{{ else }}false{{ end }}"
+            - name: MINIO_STORAGE_MEDIA_BUCKET_NAME
+              value: "{{ .Values.minio.defaultBucket.name }}"
+            - name: MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET
+              value: "false"
 {{- end }}
           ports:
             - name: http

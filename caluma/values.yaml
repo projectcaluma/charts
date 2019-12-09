@@ -35,9 +35,17 @@ secretKey: "SUPERSECRET"
 allowedHosts: "*"
 
 frontend:
-  environment: []
-  ## Specify the environment variables for the frontend deployment just like you
-  ## would define them directly on the container spec.
+  additionalEnvironment: []
+  ## Specify additional environment variables for the frontend deployment just
+  ## like you would define them directly on the container spec.
+  ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  # - name: EXAMPLE
+  #   value: example
+
+backend:
+  additionalEnvironment: []
+  ## Specify additional environment variables for the backend deployment just
+  ## like you would define them directly on the container spec.
   ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   # - name: EXAMPLE
   #   value: example
