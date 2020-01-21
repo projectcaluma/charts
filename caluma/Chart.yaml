@@ -1,7 +1,7 @@
 apiVersion: v1
 name: caluma
 description: A collaborative form editing service
-version: 0.6.0
+version: 0.6.1
 appVersion: 2.0.0
 keywords:
 - caluma

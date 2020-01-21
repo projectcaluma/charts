@@ -45,9 +45,9 @@ spec:
             - name: ALLOWED_HOSTS
               value: "{{ .Values.allowedHosts }}"
             - name: VISIBILITY_CLASSES
-              value: "caluma.core.visibilities.Any"
+              value: "caluma.caluma_core.visibilities.Any"
             - name: PERMISSION_CLASSES
-              value: "caluma.core.permissions.AllowAny"
+              value: "caluma.caluma_core.permissions.AllowAny"
 {{- if .Values.backend.additionalEnvironment }}
 {{ toYaml .Values.backend.additionalEnvironment | indent 12 }}
 {{- end }}
