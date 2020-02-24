@@ -1,0 +1,23 @@
+apiVersion: v1
+entries:
+  caluma:
+  - apiVersion: v1
+    appVersion: 2.0.0
+    created: "2020-02-24T13:43:09.175174371Z"
+    description: A collaborative form editing service
+    digest: 1452c510dd5995bea69a712fb7d1b144ea089b2dfe340b3cb75423878d2a9ee5
+    engine: gotpl
+    home: https://caluma.io/
+    icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
+    keywords:
+    - caluma
+    maintainers:
+    - email: contact@caluma.io
+      name: Caluma
+    name: caluma
+    sources:
+    - https://github.com/projectcaluma/caluma
+    urls:
+    - https://github.com/projectcaluma/charts/releases/download/caluma-0.6.1/caluma-0.6.1.tgz
+    version: 0.6.1
+generated: "2020-02-24T13:43:09.032546743Z"
