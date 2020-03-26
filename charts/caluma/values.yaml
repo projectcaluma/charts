@@ -7,9 +7,9 @@ replicaCount: 1
 image:
   backend:
     repository: projectcaluma/caluma
-    # If no value for tag is specified the image tag
-    # version-{{ .Chart.AppVersion }} is being used.
-    #tag: version-2.0.0
+    ## If no value for tag is specified the image tag
+    ## version-{{ .Chart.AppVersion }} is being used.
+    # tag: version-2.0.0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -52,9 +52,9 @@ backend:
 
 service:
   type: ClusterIP
-  # TODO: provide ability to configure service for frontend and backend
-  # separately
-  #port: 80
+  ## TODO: provide ability to configure service for frontend and backend
+  ## separately
+  # port: 80
 
 ingress:
   enabled: false
@@ -70,10 +70,10 @@ ingress:
   #      - chart-example.local
 
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #  cpu: 100m
   #  memory: 128Mi
@@ -111,7 +111,7 @@ postgresql:
   ## extension required by Caluma.
   initdbScripts:
     create_extension_hstore.sh: |
-      #!/bin/sh
+      # !/bin/sh
       #
       # This script is being used to temporarily switch socket connections to trusted
       # to enable the hstore extension in the database above.
@@ -139,16 +139,16 @@ minio:
   defaultBucket:
     enabled: true
     name: caluma-media
-    # TODO: review MinIO policies
-    #policy: none
+    ## TODO: review MinIO policies
+    # policy: none
   ingress:
     enabled: true
     annotations: {}
       ## You might need to increase the client_max_body_size in nginx-ingress
       ## you can do this using the following annotation.
       ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md#custom-max-body-size
-      #nginx.ingress.kubernetes.io/proxy-body-size: 16m
-      #kubernetes.io/ingress.class: "nginx"
+      # nginx.ingress.kubernetes.io/proxy-body-size: 16m
+      # kubernetes.io/ingress.class: "nginx"
     hosts:
       - caluma.chart-example.local
     tls: []
