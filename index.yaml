@@ -2,11 +2,37 @@ apiVersion: v1
 entries:
   caluma:
   - apiVersion: v1
+    appVersion: 5.5.0
+    created: "2020-03-26T11:11:18.772976889Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 6.x.x
+    - condition: minio.enabled
+      name: minio
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 2.x.x
+    description: A collaborative form editing service
+    digest: 240f3e18b89f9390cd1aa96522b77478540cf12ac33946f03d7262d62a7beebe
+    home: https://caluma.io/
+    icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
+    keywords:
+    - caluma
+    maintainers:
+    - email: contact@caluma.io
+      name: Caluma
+    name: caluma
+    sources:
+    - https://github.com/projectcaluma/caluma
+    urls:
+    - https://github.com/projectcaluma/charts/releases/download/caluma-0.9.2/caluma-0.9.2.tgz
+    version: 0.9.2
+  - apiVersion: v1
     appVersion: 5.3.1
     created: "2020-02-24T16:16:34.531625295Z"
     description: A collaborative form editing service
     digest: f27e328d3ab63d6de6c486bf1853a2211215d5249104eb2c70818f59a5f45e39
-    engine: gotpl
     home: https://caluma.io/
     icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
     keywords:
@@ -25,7 +51,6 @@ entries:
     created: "2020-02-24T13:43:09.175174371Z"
     description: A collaborative form editing service
     digest: 1452c510dd5995bea69a712fb7d1b144ea089b2dfe340b3cb75423878d2a9ee5
-    engine: gotpl
     home: https://caluma.io/
     icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
     keywords:
