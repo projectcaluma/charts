@@ -110,6 +110,8 @@ postgresql:
   ## So now we're stuck with this piece of shell code to activate the hstore
   ## extension required by Caluma.
   initdbScripts:
+    # postgresql.initdbScripts."create_extension_hstore.sh" -- script to initialize hstore
+    # @default -- script that switches the socket to trusted to configure hstore
     create_extension_hstore.sh: |
       # !/bin/sh
       #

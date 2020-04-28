@@ -23,6 +23,8 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.frontend.repository }}:{{ .Values.image.frontend.tag }}"
           imagePullPolicy: {{ .Values.image.frontend.pullPolicy }}
+          command: ["nginx"]
+          args: ["-g", "daemon off;"]
           env:
 {{ toYaml .Values.frontend.additionalEnvironment | indent 12 }}
           ports:

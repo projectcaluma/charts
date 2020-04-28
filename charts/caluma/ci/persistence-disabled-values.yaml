@@ -1,0 +1,7 @@
+minio:
+  persistence:
+    enabled: false
+
+postgresql:
+  persistence:
+    enabled: false
