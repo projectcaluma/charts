@@ -18,8 +18,8 @@ image:
     # imagePullSecrets:
     #   - myRegistryKeySecretName
   frontend:
-    repository: projectcaluma/caluma-demo
-    tag: stable
+    repository: projectcaluma/caluma-portal-demo
+    tag: latest
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
