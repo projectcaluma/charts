@@ -2,6 +2,33 @@ apiVersion: v1
 entries:
   caluma:
   - apiVersion: v1
+    appVersion: 7.7.0
+    created: "2021-02-18T07:37:28.737746481Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 6.x.x
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.helm.sh/stable
+      version: 2.x.x
+    description: A collaborative form editing service
+    digest: b8739865a56dda7ef5cd6132aeb56a7e8ccc82e1529917fb7548356eae290ab6
+    home: https://caluma.io/
+    icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
+    keywords:
+    - caluma
+    maintainers:
+    - email: contact@caluma.io
+      name: Caluma
+    name: caluma
+    sources:
+    - https://github.com/projectcaluma/caluma
+    urls:
+    - https://github.com/projectcaluma/charts/releases/download/caluma-0.10.2/caluma-0.10.2.tgz
+    version: 0.10.2
+  - apiVersion: v1
     appVersion: 6.6.0
     created: "2021-01-06T11:04:11.836503828Z"
     dependencies:
