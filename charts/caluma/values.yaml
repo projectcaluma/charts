@@ -41,6 +41,10 @@ frontend:
   ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   # - name: EXAMPLE
   #   value: example
+  service:
+    name: "caluma-portal-frontend"
+    externalPort: 80
+    type: ClusterIP
 
 backend:
   additionalEnvironment: []
@@ -49,12 +53,8 @@ backend:
   ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   # - name: EXAMPLE
   #   value: example
-
-service:
-  type: ClusterIP
-  ## TODO: provide ability to configure service for frontend and backend
-  ## separately
-  # port: 80
+  service:
+    type: ClusterIP
 
 ingress:
   enabled: false

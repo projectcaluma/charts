@@ -1,9 +1,0 @@
-dependencies:
-- name: postgresql
-  repository: https://charts.helm.sh/stable
-  version: 6.5.9
-- name: minio
-  repository: https://charts.helm.sh/stable
-  version: 2.5.18
-digest: sha256:d545e68a31122cbd89b0596918ec8a9d600711070a28c2f404196235e9ca7e6d
-generated: "2021-01-06T11:43:05.244128796+01:00"
