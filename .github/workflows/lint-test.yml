@@ -24,27 +24,25 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install chart-testing
+      - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.4.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct --config=hack/chart-testing/ct.yaml list-changed)
+          changed=$(ct --config=hack/ct.yaml list-changed --target-branch ${{ github.event.repository.default_branch }})
           if [[ -n "$changed" ]]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run chart-testing (lint)
-        run: ct --config=hack/chart-testing/ct.yaml lint
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct --config=hack/ct.yaml lint --target-branch ${{ github.event.repository.default_branch }}
 
       - name: Create kind cluster
+        if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.8.0
-        if: steps.list-changed.outputs.changed == 'true'
-
-      - name: Setup cluster for chart-testing (install)
-        run: hack/deploy/init.sh
-        if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct --config=hack/chart-testing/ct-install.yaml install
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct --config=hack/ct-install.yaml install --target-branch ${{ github.event.repository.default_branch }}

@@ -24,7 +24,7 @@ sources:
 maintainers:
   - name: Caluma
     email: contact@caluma.io
-  
+
 dependencies:
   - name: postgresql
     version: ~11.9.13
