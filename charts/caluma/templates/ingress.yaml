@@ -30,11 +30,13 @@ spec:
             backend:
               service:
                 name: {{ $fullName }}-frontend
-                port: 80
+                port:
+                  number: 80
           - path: /graphql
             backend:
               service:
                 name: {{ $fullName }}-backend
-                port: 8000
+                port: 
+                  number: 8000
   {{- end }}
 {{- end }}
