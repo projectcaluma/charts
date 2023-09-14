@@ -42,8 +42,6 @@ frontend:
   # - name: EXAMPLE
   #   value: example
   service:
-    name: "caluma-portal-frontend"
-    externalPort: 80
     type: ClusterIP
 
 backend:

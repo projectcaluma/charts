@@ -10,7 +10,7 @@ spec:
   containers:
     - name: curl
       image: curlimages/curl:7.69.1
-      args: ['--silent', '--show-error', '--fail', '{{ .Values.frontend.service.name }}:{{ .Values.frontend.service.externalPort }}']
+      args: ['--silent', '--show-error', '--fail', '{{ template "caluma.fullname" . }}-frontend']
   restartPolicy: Never
 
 
