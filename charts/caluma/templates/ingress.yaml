@@ -27,12 +27,14 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
               service:
                 name: {{ $fullName }}-frontend
                 port:
                   number: 80
           - path: /graphql
+            pathType: Prefix
             backend:
               service:
                 name: {{ $fullName }}-backend
