@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   backend:
-    repository: projectcaluma/caluma
+    repository: ghcr.io/projectcaluma/caluma
     ## If no value for tag is specified the image tag
     ## version-{{ .Chart.AppVersion }} is being used.
     # tag: version-2.0.0
@@ -18,7 +18,7 @@ image:
     # imagePullSecrets:
     #   - myRegistryKeySecretName
   frontend:
-    repository: projectcaluma/caluma-portal-demo
+    repository: ghcr.io/projectcaluma/caluma-portal-demo
     tag: latest
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -41,6 +41,10 @@ frontend:
   ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   # - name: EXAMPLE
   #   value: example
+  service:
+    name: "caluma-portal-frontend"
+    externalPort: 80
+    type: ClusterIP
 
 backend:
   additionalEnvironment: []
@@ -49,12 +53,8 @@ backend:
   ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   # - name: EXAMPLE
   #   value: example
-
-service:
-  type: ClusterIP
-  ## TODO: provide ability to configure service for frontend and backend
-  ## separately
-  # port: 80
+  service:
+    type: ClusterIP
 
 ingress:
   enabled: false
@@ -90,9 +90,12 @@ affinity: {}
 postgresql:
   enabled: true
 
-  postgresqlDatabase: caluma
-  postgresqlUsername: caluma
-  postgresqlPassword: CHANGEME
+  global:
+    postgresql:
+      auth:
+        database: caluma
+        username: caluma
+        password: CHANGEME
 
   ## This is one of those hacks where you're both proud and shocked about the
   ## thing you created at the same time.

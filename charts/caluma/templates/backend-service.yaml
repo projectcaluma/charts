@@ -6,7 +6,7 @@ metadata:
 {{ include "caluma.labels" . | indent 4 }}
     app.kubernetes.io/component: backend
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.backend.service.type }}
   ports:
     - port: 8000
       targetPort: http

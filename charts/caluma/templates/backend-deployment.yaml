@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.backend.repository }}:{{ if .Values.image.backend.tag }}{{ .Values.image.backend.tag }}{{ else }}version-{{ .Chart.AppVersion }}{{ end }}"
+          image: "{{ .Values.image.backend.repository }}:{{ if .Values.image.backend.tag }}{{ .Values.image.backend.tag }}{{ else }}{{ .Chart.AppVersion }}{{ end }}"
           imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
           env:
             - name: DATABASE_HOST
@@ -31,12 +31,12 @@ spec:
             - name: DATABASE_PORT
               value: "5432"
             - name: DATABASE_USER
-              value: "{{ .Values.postgresql.postgresqlUsername }}"
+              value: "{{ .Values.postgresql.global.postgresql.auth.username }}"
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: "{{ template "caluma.fullname" . }}-postgresql"
-                  key: postgresql-password
+                  key: password
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
