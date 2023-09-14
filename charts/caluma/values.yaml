@@ -92,7 +92,7 @@ postgresql:
 
   postgresqlDatabase: caluma
   postgresqlUsername: caluma
-  postgresqlPassword: CHANGEME
+  postgre-password: CHANGEME
 
   ## This is one of those hacks where you're both proud and shocked about the
   ## thing you created at the same time.

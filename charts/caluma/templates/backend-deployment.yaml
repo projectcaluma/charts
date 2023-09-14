@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: "{{ template "caluma.fullname" . }}-postgresql"
-                  key: postgresqlPassword
+                  key: postgres-password
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
