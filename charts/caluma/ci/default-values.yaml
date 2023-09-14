@@ -1,0 +1,5 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: caluma.chart-example.local
+  tls: []
