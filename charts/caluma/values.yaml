@@ -90,9 +90,12 @@ affinity: {}
 postgresql:
   enabled: true
 
-  postgresqlDatabase: caluma
-  postgresqlUsername: caluma
-  postgre-password: CHANGEME
+  global:
+    postgresql:
+      auth:
+        database: caluma
+        username: caluma
+        password: CHANGEME
 
   ## This is one of those hacks where you're both proud and shocked about the
   ## thing you created at the same time.

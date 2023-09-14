@@ -31,12 +31,12 @@ spec:
             - name: DATABASE_PORT
               value: "5432"
             - name: DATABASE_USER
-              value: "{{ .Values.postgresql.postgresqlUsername }}"
+              value: "{{ .Values.postgresql.global.postgresql.auth.username }}"
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: "{{ template "caluma.fullname" . }}-postgresql"
-                  key: postgres-password
+                  key: password
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
