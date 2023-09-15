@@ -32,7 +32,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 secretKey: "SUPERSECRET"
-# instead of exposing the secretKey in the values, a existingSecret can be defined 
+# instead of exposing the secretKey in the values, a existingSecret can be defined
 # if set no secret will be created by the Helm chart.
 # create the secret manually:
 # kubectl create secret generic -n your-namespace --from-literal=secretKey=SUPERSECRETKEY
