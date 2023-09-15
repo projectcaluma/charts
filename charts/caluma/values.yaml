@@ -32,6 +32,11 @@ nameOverride: ""
 fullnameOverride: ""
 
 secretKey: "SUPERSECRET"
+# instead of exposing the secretKey in the values, a existingSecret can be defined
+# if set no secret will be created by the Helm chart.
+# create the secret manually:
+# kubectl create secret generic -n your-namespace --from-literal=secretKey=SUPERSECRETKEY
+existingSecret: ""
 allowedHosts: "*"
 
 frontend:
@@ -53,6 +58,12 @@ backend:
   #   value: example
   service:
     type: ClusterIP
+
+  postgresql:
+    ## Optionally sepcify an existing database host to connect to
+    ## this can only be used if postgresql.enabled is set to false
+    existingHost: ""
+
 
 ingress:
   enabled: false
