@@ -3,6 +3,34 @@ entries:
   caluma:
   - apiVersion: v2
     appVersion: 9.3.1
+    created: "2023-09-15T11:32:03.484702991Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.9.13
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io
+      version: 5.0.8
+    description: A collaborative form editing service
+    digest: 1222b116f7081aad5a472fffa1041333ba9e2acbda2ef4174c66b71cbdbc89d0
+    home: https://caluma.io/
+    icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
+    keywords:
+    - caluma
+    maintainers:
+    - email: contact@caluma.io
+      name: Caluma
+    name: caluma
+    sources:
+    - https://github.com/projectcaluma/caluma
+    type: application
+    urls:
+    - https://github.com/projectcaluma/charts/releases/download/caluma-0.11.0/caluma-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v2
+    appVersion: 9.3.1
     created: "2023-09-14T15:31:54.855156958Z"
     dependencies:
     - condition: postgresql.enabled
