@@ -27,7 +27,16 @@ spec:
           imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
           env:
             - name: DATABASE_HOST
+              {{- if and .Values.postgresql.enabled .Values.backend.postgresql.existingHost }}
+              {{ fail "postgresql.enabled and backend.postgresql.existingHost are mutually exclusive, please pick one" }}
+              {{- end }}
+              {{- if .Values.postgresql.enabled }}
               value: "{{ template "caluma.fullname" . }}-postgresql"
+              {{- else if .Values.backend.postgresql.existingHost }}
+              value: {{ .Values.backend.postgresql.existingHost | quote }}
+              {{- else }}
+              {{ fail "neither postgresql.enabled or backend.postgresql.existingHost are set, please pick one" }}
+              {{- end }}
             - name: DATABASE_PORT
               value: "5432"
             - name: DATABASE_USER
@@ -40,7 +49,11 @@ spec:
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
+                  {{- if .Values.existingSecret }}
+                  name: {{ .Values.existingSecret | quote }}
+                  {{- else }}
                   name: "{{ template "caluma.fullname" . }}-backend"
+                  {{- end }}
                   key: secretkey
             - name: ALLOWED_HOSTS
               value: "{{ .Values.allowedHosts }}"
