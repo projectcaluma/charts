@@ -1,50 +1,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "caluma.fullname" . }}-backend
+  name: {{ template "caluma.fullname" . }}-alexandria
   labels:
 {{ include "caluma.labels" . | indent 4 }}
-    app.kubernetes.io/component: backend
+    app.kubernetes.io/component: alexandria
   annotations:
-    checksum/backend-secret: {{ include (print $.Template.BasePath "/backend-secret.yaml") . | sha256sum }}
+    checksum/alexandria-secret: {{ include (print $.Template.BasePath "/alexandria-secret.yaml") . | sha256sum }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "caluma.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-      app.kubernetes.io/component: backend
+      app.kubernetes.io/component: alexandria
   template:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "caluma.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/component: backend
+        app.kubernetes.io/component: alexandria
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.backend.repository }}:{{ if .Values.image.backend.tag }}{{ .Values.image.backend.tag }}{{ else }}{{ .Chart.AppVersion }}{{ end }}"
-          imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
+          image: "{{ .Values.image.alexandria.repository }}:{{ if .Values.image.alexandria.tag }}{{ .Values.image.alexandria.tag }}{{ else }}{{ .Chart.AppVersion }}{{ end }}"
+          imagePullPolicy: {{ .Values.image.alexandria.pullPolicy }}
           env:
             - name: DATABASE_HOST
-              {{- if and .Values.postgresql.enabled .Values.backend.postgresql.existingHost }}
-              {{ fail "postgresql.enabled and backend.postgresql.existingHost are mutually exclusive, please pick one" }}
+              {{- if and .Values.postgresql.enabled .Values.alexandria.postgresql.existingHost }}
+              {{ fail "postgresql.enabled and alexandria.postgresql.existingHost are mutually exclusive, please pick one" }}
               {{- end }}
               {{- if .Values.postgresql.enabled }}
               value: "{{ template "caluma.fullname" . }}-postgresql"
-              {{- else if .Values.backend.postgresql.existingHost }}
-              value: {{ .Values.backend.postgresql.existingHost | quote }}
+              {{- else if .Values.alexandria.postgresql.existingHost }}
+              value: {{ .Values.alexandria.postgresql.existingHost | quote }}
               {{- else }}
-              {{ fail "neither postgresql.enabled or backend.postgresql.existingHost are set, please pick one" }}
+              {{ fail "neither postgresql.enabled or alexandria.postgresql.existingHost are set, please pick one" }}
               {{- end }}
             - name: DATABASE_PORT
               value: "5432"
             - name: DATABASE_USER
-              value: "{{ .Values.postgresql.global.postgresql.auth.caluma.username }}"
+              value: "{{ .Values.postgresql.global.postgresql.auth.alexandria.username }}"
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "{{ template "caluma.fullname" . }}-postgresql"
+                  name: "{{ template "caluma.fullname" . }}-postgresql-alexandria"
                   key: password
             - name: SECRET_KEY
               valueFrom:
@@ -52,7 +52,7 @@ spec:
                   {{- if .Values.existingSecret }}
                   name: {{ .Values.existingSecret | quote }}
                   {{- else }}
-                  name: "{{ template "caluma.fullname" . }}-backend"
+                  name: "{{ template "caluma.fullname" . }}-alexandria"
                   {{- end }}
                   key: secretkey
             - name: ALLOWED_HOSTS
@@ -61,28 +61,8 @@ spec:
               value: "caluma.caluma_core.visibilities.Any"
             - name: PERMISSION_CLASSES
               value: "caluma.caluma_core.permissions.AllowAny"
-{{- if .Values.backend.additionalEnvironment }}
-{{ toYaml .Values.backend.additionalEnvironment | indent 12 }}
-{{- end }}
-{{- if .Values.minio.enabled }}
-            - name: MINIO_STORAGE_ENDPOINT
-              value: "{{ index .Values.minio.ingress.hosts 0 }}"
-            - name: MINIO_STORAGE_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: "{{ template "caluma.fullname" . }}-minio"
-                  key: accesskey
-            - name: MINIO_STORAGE_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: "{{ template "caluma.fullname" . }}-minio"
-                  key: secretkey
-            - name: MINIO_STORAGE_USE_HTTPS
-              value: "{{ if $.Values.minio.ingress.tls }}true{{ else }}false{{ end }}"
-            - name: MINIO_STORAGE_MEDIA_BUCKET_NAME
-              value: "{{ .Values.minio.defaultBucket.name }}"
-            - name: MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET
-              value: "false"
+{{- if .Values.alexandria.additionalEnvironment }}
+{{ toYaml .Values.alexandria.additionalEnvironment | indent 12 }}
 {{- end }}
           ports:
             - name: http
@@ -98,7 +78,7 @@ spec:
               port: http
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.image.backend.imagePullSecrets }}
+    {{- with .Values.image.alexandria.imagePullSecrets }}
       imagePullSecrets:
         {{- range . }}
         - name: {{ . }}
