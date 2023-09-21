@@ -27,6 +27,14 @@ image:
     ##
     # imagePullSecrets:
     #   - myRegistryKeySecretName
+  emeis:
+    repository: ghcr.io/projectcaluma/emeis
+    tag: 1.2.2
+    pullPolicy: IfNotPresent
+  alexandria:
+    repository: ghcr.io/projectcaluma/alexandria
+    tag: 2.2.0
+    pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
@@ -64,6 +72,13 @@ backend:
     ## this can only be used if postgresql.enabled is set to false
     existingHost: ""
 
+alexandria:
+  service:
+    type: ClusterIP
+
+emeis:
+  service:
+    type: ClusterIP
 
 ingress:
   enabled: false
@@ -102,9 +117,18 @@ postgresql:
   global:
     postgresql:
       auth:
-        database: caluma
-        username: caluma
-        password: CHANGEME
+        caluma:
+          database: caluma
+          username: caluma
+          password: CHANGEME
+        emeis:
+          database: emeis
+          username: emeisemeis
+          password: CHANGEME
+        alxeandria:
+          database: alexandria
+          username: alexandria
+          password: CHANGEME
 
   ## This is one of those hacks where you're both proud and shocked about the
   ## thing you created at the same time.
