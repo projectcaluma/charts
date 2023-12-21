@@ -64,6 +64,71 @@ backend:
     ## this can only be used if postgresql.enabled is set to false
     existingHost: ""
 
+alexandria:
+  additionalEnvironment:
+    - name: SECRET_KEY
+      value: demo
+    - name: ALLOWED_HOSTS
+      value: "*"
+    - name: ENV
+      value: production
+    - name: ALLOW_ANONYMOUS_WRITE
+      value: "true"
+    - name: LANGUAGES
+      value: "de,en"
+    - name: VISIBILITY_CLASSES
+      value: ""
+    - name: PERMISSION_CLASSES
+      value: ""
+  ## Specify additional environment variables for the backend deployment just
+  ## like you would define them directly on the container spec.
+  ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  # - name: EXAMPLE
+  #   value: example
+  image:
+    repository: ghcr.io/projectcaluma/alexandria
+    tag: 2.2.0
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  postgresql:
+    username: ""
+    existingSecret: ""
+    existingSecretKey: ""
+  service:
+    type: ClusterIP
+
+emeis:
+  additionalEnvironment:
+    - name: SECRET_KEY
+      value: demo
+    - name: ALLOWED_HOSTS
+      value: "*"
+    - name: ENV
+      value: production
+    - name: ALLOW_ANONYMOUS_WRITE
+      value: "true"
+    - name: LANGUAGES
+      value: "de,en"
+    - name: VISIBILITY_CLASSES
+      value: ""
+    - name: PERMISSION_CLASSES
+      value: ""
+  ## Specify additional environment variables for the backend deployment just
+  ## like you would define them directly on the container spec.
+  ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  # - name: EXAMPLE
+  #   value: example
+  image:
+    repository: ghcr.io/projectcaluma/emeis
+    tag: 1.2.2
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  postgresql:
+    username: ""
+    existingSecret: ""
+    existingSecretKey: ""
+  service:
+    type: ClusterIP
 
 ingress:
   enabled: false

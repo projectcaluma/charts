@@ -40,5 +40,19 @@ spec:
                 name: {{ $fullName }}-backend
                 port: 
                   number: 8000
+          - path: /alexandria/api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-alexandria
+                port: 
+                  number: 8000
+          - path: /emeis/api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-emeis
+                port: 
+                  number: 8000
   {{- end }}
 {{- end }}
