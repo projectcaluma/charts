@@ -1,0 +1,21 @@
+apiVersion: v2
+name: emeis
+description: Run emeis on Kubernetes
+type: application
+version: 0.1.0
+appVersion: 1.3.4
+keywords:
+  - caluma
+home: https://caluma.io/
+icon: https://avatars0.githubusercontent.com/u/42172011?s=200&v=4
+sources:
+  - https://github.com/projectcaluma/emeis
+  - https://github.com/projectcaluma/charts
+maintainers:
+  - name: Caluma
+    email: contact@caluma.io
+dependencies:
+  - name: postgresql
+    version: ~14.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
