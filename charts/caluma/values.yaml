@@ -96,6 +96,10 @@ tolerations: []
 
 affinity: {}
 
+alexandria:
+  # -- Deploy alexandria DMS
+  enabled: false
+
 postgresql:
   enabled: true
 
